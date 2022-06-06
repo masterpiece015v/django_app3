@@ -9,14 +9,13 @@
 
     </head>
     <body>
-        <form action="{% url 'find' %}" method="post">
+        <p>{{message}}</p>
+        <form action="{% url 'check' %}" method="post">
             {% csrf_token %}
             {{form.as_p}}
             <input type="submit" value="検索">
             
         </form>
-        {% for item in data %}
-            <p>{{item.name}} , {{item.mail}} , {{ item.age }}</p>
-        {% endfor %}
+
     </body>
-</htm*
+</htm>
