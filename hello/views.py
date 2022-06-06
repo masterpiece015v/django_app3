@@ -14,3 +14,6 @@ def index(request):
         'data':data
     }
     return render( request, "hello/index.html" , params )
+
+def find( request ):
+    
