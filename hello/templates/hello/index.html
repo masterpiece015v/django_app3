@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <link rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        crossorigin="anonymous">
+
+    </head>
+    <body>
+        {{msg}}
+
+        {% for item in data %}
+            <p>{{item.name}} , {{item.mail}} , {{ item.age }}</p>
+        {% endfor %}
+    </body>
+</html>

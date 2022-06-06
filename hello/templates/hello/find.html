@@ -1,0 +1,21 @@
+ {% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <link rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        crossorigin="anonymous">
+
+    </head>
+    <body>
+        <form action="{% url 'find' %}" method="post">
+            {% csrf_token %}
+            {{form}}
+            <input type="submit" value="検索">
+        </form>
+        {% for item in data %}
+            <p>{{item.name}} , {{item.mail}} , {{ item.age }}</p>
+        {% endfor %}
+    </body>
+</html>
