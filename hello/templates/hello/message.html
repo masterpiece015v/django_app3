@@ -8,13 +8,34 @@
         crossorigin="anonymous">
 
     </head>
-    <body>
-        {{msg}}
+    <body class="container">
+        <h1 class="display-4 text-primary">
+            {{title}}
+        </h1>
+        <form action="{% url 'message' %}" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="send" class="btn btn-primary">
+        </form>
 
-        {% for item in data %}
-            <p>{{item.name}} , {{item.mail}} , {{ item.age }}</p>
-        {% endfor %}
+        <div class="mt-5"></div>
 
+        <table class="table">
+            <tr>
+                <th class="py-1">title</th>
+                <th class="py-1">name</th>
+                <th class="py-1">datetime</th>
+                
+            </tr>
+            {% for item in data %}
+            <tr>
+                <td class="py-2">{{item.title}}</td>
+                <td class="py-2">{{item.friend.name}}</td>
+                <td class="py-2">{{item.pub_date}}</td>
+
+            </tr>
+            {% endfor %}
+        </table>
         <ul class="pagination">
             {% if data.has_previous %}
             <li class="page-item">

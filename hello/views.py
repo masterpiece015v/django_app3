@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from .models import Friend
-from .forms import FindForm,CheckForm,FriendForm
+from .models import Friend,Message
+from .forms import FindForm,CheckForm,FriendForm,MessageForm
 from django.db.models import Count,Sum,Avg,Min,Max
 from django.core.paginator import Paginator
 # Create your views here.
@@ -10,9 +10,12 @@ def index(request , num=1 ):
     re2 = Friend.objects.aggregate(Avg('age'))
     re3 = Friend.objects.aggregate(Sum('age'))
     page = Paginator( data , 3 )
+    page_list = list(page.page_range) #[1,2,3]
+    print(page_list)
     params = {
         'msg' : "{} {} {}".format(re1,re2,re3),
-        'data':page.get_page( num )
+        'data':page.get_page( num ),
+        'page_list':page_list,
     }
     return render( request, "hello/index.html" , params )
 
@@ -63,3 +66,17 @@ def check( request ):
             params['message'] = 'no good'
         
     return render( request , 'hello/check.html' , params )
+
+def message( request , page=1 ):
+    if( request.method == 'POST' ):
+        obj = Message()
+        form = MessageForm( request.POST , instance=obj )
+        form.save()
+    data = Message.objects.all().reverse()
+    paginator = Paginator(data,5)
+    params = {
+        'title':'Message',
+        'form':MessageForm(),
+        'data':paginator.get_page( page )
+    }
+    return render( request,'hello/message.html' , params )

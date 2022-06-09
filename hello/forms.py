@@ -1,7 +1,18 @@
 from turtle import textinput
 from django import forms
 
-from hello.models import Friend
+from hello.models import Friend,Message
+
+class MessageForm( forms.ModelForm ):
+    class Meta:
+        model = Message
+        fields = ['title','content','friend']
+        widget = {
+            'title':forms.TextInput(attrs={'class':'form-control form-control-sm'}),
+            'content':forms.Textarea(attrs={'class':'form-control form-control-sm','rows':2}),
+            'friend':forms.Select( attrs={'class':'form-control form-control-sm'})
+        }
+
 
 class FriendForm( forms.ModelForm):
     class Meta:
@@ -23,4 +34,6 @@ class CheckForm( forms.Form ):
         widget=forms.TextInput(attrs={'class':'form-control'}))
     date = forms.DateField( label='Date', input_formats=['%y/%m/%d'],
         widget=forms.DateInput(attrs={'class':'form-control'}))
+
+
     
