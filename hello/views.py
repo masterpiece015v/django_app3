@@ -2,16 +2,17 @@ from django.shortcuts import render
 from .models import Friend
 from .forms import FindForm,CheckForm,FriendForm
 from django.db.models import Count,Sum,Avg,Min,Max
-
+from django.core.paginator import Paginator
 # Create your views here.
-def index(request):
+def index(request , num=1 ):
     data = Friend.objects.all().order_by('age').reverse()
     re1 = Friend.objects.aggregate(Count('age'))
     re2 = Friend.objects.aggregate(Avg('age'))
     re3 = Friend.objects.aggregate(Sum('age'))
+    page = Paginator( data , 3 )
     params = {
         'msg' : "{} {} {}".format(re1,re2,re3),
-        'data':data
+        'data':page.get_page( num )
     }
     return render( request, "hello/index.html" , params )
 
